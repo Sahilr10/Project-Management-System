@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body } from "express-validator";
 
 const userRegisterValidator = () => {
     return [
@@ -27,8 +27,8 @@ const userRegisterValidator = () => {
             .optional()
             .isLength({ min: 3, max: 50 })
             .withMessage("Full name must be between 3 and 50 characters"),
-    ]
-}
+    ];
+};
 
 const userLoginValidator = () => {
     return [
@@ -38,14 +38,38 @@ const userLoginValidator = () => {
             .withMessage("Email is required")
             .isEmail()
             .withMessage("Invalid email address"),
-        body("password")
-            .notEmpty()
-            .withMessage("Password is required")
+        body("password").notEmpty().withMessage("Password is required"),
+    ];
+};
 
-    ]
-}
+const userChangeCurrentPasswordValidator = () => {
+    return [
+        body("oldPassword").notEmpty().withMessage("Old password is required"),
+        body("newPassword").notEmpty().withMessage("new password is required"),
+    ];
+};
+
+const userForgotPasswordValidator = () => {
+    return [
+        body("email")
+            .trim()
+            .notEmpty()
+            .withMessage("Email is required")
+            .isEmail()
+            .withMessage("Invalid email address"),
+    ];
+};
+
+const userResetForgotPasswordValidator = () => {
+    return [
+        body("newPassword").notEmpty().withMessage("New password is required"),
+    ];
+};
 
 export {
     userRegisterValidator,
-    userLoginValidator
-}
+    userLoginValidator,
+    userChangeCurrentPasswordValidator,
+    userForgotPasswordValidator,
+    userResetForgotPasswordValidator,
+};
